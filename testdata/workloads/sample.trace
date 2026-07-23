@@ -1,0 +1,51 @@
+# Hand-written sample trace -- exercises every line form the reader accepts.
+# Sequential fill of a small region.
+W 0
+W 1
+W 2
+W 3
+W 4
+W 5
+W 6
+W 7
+
+# Bare LPNs are writes too.
+8
+9
+10
+11
+
+# Read back what we just wrote (reads do not consume physical pages).
+R 0
+R 4
+R 11
+
+# Repeated overwrite of one hot page: every line here invalidates the previous
+# copy and programs a fresh physical page, so this alone drives GC.
+W 3
+W 3
+W 3
+W 3
+W 3
+W 3
+W 3
+W 3
+
+# A read of a page that was never written -- resolves to unmapped.
+R 900
+
+# Scattered writes across the region.
+W 12
+W 5
+W 19
+W 2
+W 27
+W 8
+W 31
+W 14
+W 3
+W 22
+
+# Lowercase op letters are accepted as well.
+w 6
+r 6
